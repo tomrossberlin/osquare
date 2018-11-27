@@ -1,13 +1,13 @@
 import {AsyncStorage} from 'react-native';
 import {action, observable} from "mobx";
-import {api, client_id, client_secret, lat, lng, lunchableCategories, v} from '../config/config';
+import {api, client_id, client_secret, lat, lng, limit, lunchableCategories, v} from '../config/config';
 import {getDistance} from '../utils/geo';
 
 class VenueStore {
   @observable venues = [];
   @observable selectedId = '';
 
-  search = `${api}?client_id=${client_id}&client_secret=${client_secret}&v=${v}&radius=250`;
+  search = `${api}?client_id=${client_id}&client_secret=${client_secret}&v=${v}&radius=250&limit=${limit}`;
   // lunchSearch = `${this.search}&categoryId=${lunchableCategories}`;
 
   recalculateDistances = (venues) => {
@@ -29,9 +29,9 @@ class VenueStore {
   };
 
   @action fetchVenues = async () => {
-    const north = 0.002248;
+    const north = 0.001124;
     const south = -north;
-    const east = 0.003693;
+    const east = north * 1.643;
     const west = -east;
 
     let venues = [];
